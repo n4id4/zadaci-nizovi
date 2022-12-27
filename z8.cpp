@@ -22,7 +22,7 @@ float prosjek(int niz[])
     for (int i = 0; i < 4; i++)
         suma += niz[i];
 
-    return suma / 1.F / 4;
+    return (float)suma/ 4;
 }
 
 int prebroji(int matrica[][4], int predmet)
