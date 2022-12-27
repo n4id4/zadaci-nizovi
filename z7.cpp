@@ -1,6 +1,6 @@
 /*
 Napisati program koji će omogućiti unos minimalno trocifrenih cijelih brojeva u jednodimenzionalni niz od 20 elemenata. 
-Zatim napraviti funkciju koja će u nizu pronaći sve brojeve kojima je prva cifra (početna cifra sa lijeve strane) parna i ukloniti ih iz niza. 
+Zatim napraviti funkciju koja će u nizu pronaći sve brojeve kojima je prva cifra (početna cifra sa desne strane) parna i ukloniti ih iz niza. 
 žUklanjanje elemenata niza obavezno uraditi tako da ne ostaju prazni elementi već da se ostatak niza pomjeri kako ne bi bilo praznih elemenata.
 Pomjeranje ostatka niza obavezno raditi prilikom uklanjanja elemenata a ne sortiranjem poslije uklanjanja
 */
@@ -47,7 +47,7 @@ void izbacivanje(int niz[], int& duzina)
 
 bool parnaCifra(int broj)
 {
-    while (broj > 9) broj /= 10;
+   
 
     return broj % 2 == 0;
 }
