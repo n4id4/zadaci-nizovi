@@ -1,54 +1,80 @@
+#include <iostream>
+using namespace std;
+
 /*
 Napišite program u kojem ćete deklarirati matricu 5x4. Redak u matrici je student, a kolona predmet. Uz pomoć funkcije:
-
 void unos (int [] [4]); omogućite unos samo prolaznih ocjena (6-10) za sve studente;
 float prosjek(int []); izračunati prosječnu ocjenu jednog studenta; za kojeg od studenta će se računati prosjek bira korisnik;
 int prebroji (int [][4], int); prebrojati koliko studenata ima ocjenu 8 i više na predmetu po izboru korisnika.
 */
-#include <iostream>
 
-using namespace std;
+const int red = 5, kolona = 4;
 
-void unos(int matrica[][4])
+void unos(int matrica[][kolona])
 {
-    for (int i = 0; i < 5; i++)
-        for (int j = 0; j < 4; j++)
-            while (cout << "Unesite prolaznu ocjenu (6 - 10):\n", cin >> matrica[i][j], matrica[i][j] < 6 || matrica[i][j] > 10);
+	for (int i = 0; i < red; i++)
+	{
+		cout << "Student " << i + 1 << endl;
+		for (int j = 0; j < kolona; j++)
+		{
+			cout << "Unesite ocjenu za predemet " << j + 1 << ": ";
+			cin >> matrica[i][j];
+			if (matrica[i][j] < 6 || matrica[i][j]>10)
+				j--;
+		}
+	}
 }
 
-float prosjek(int niz[])
+void ispis(int matrica[][kolona])
 {
-    int suma = 0;
-    for (int i = 0; i < 4; i++)
-        suma += niz[i];
-
-    return (float)suma/ 4;
+	for (int i = 0; i < red; i++)
+	{
+		cout << "Student " << i + 1 << endl;
+		cout << "-----------------------------" << endl;
+		for (int j = 0; j < kolona; j++)
+			cout << "Predmet " << j + 1 << ": " << matrica[i][j] << endl;
+		cout << endl;
+	}
 }
 
-int prebroji(int matrica[][4], int predmet)
+float prosjek(int nizOcjena[])
 {
-    int brojac = 0;
-    for (int i = 0; i < 5; i++)
-        if (matrica[i][predmet] > 7)
-            brojac++;
+	int suma = 0;
+	for (int i = 0; i < kolona; i++)
+		suma += nizOcjena[i];
+	
+	return float(suma) / kolona;
+}
 
-    return brojac;
+int prebroji(int matrica[][kolona], int kolonaPredmet)
+{
+	int brojac = 0;
+	for (int i = 0; i < red; i++)
+		if (matrica[i][kolonaPredmet] >= 8)
+			brojac++;
+	
+	return brojac;
 }
 
 int main()
 {
-    int matrica[5][4];
+	int matrica[red][kolona];
+	unos(matrica);
+	system("cls");
+	ispis(matrica);
 
-    unos(matrica);
+	int brStd;
+	cout << "Unesite broj studenta ciji prosjek vas zanima: "; //napomena: ogranicite unos na samo validne vrijednosti
+	cin >> brStd;
+	brStd--;
+	cout << "Prosjek odabranog studenta je: " << prosjek(matrica[brStd])<<endl;
 
-    int izbor = 0;
+	int brPr;
+	cout << "Unesite broj predmeta koji vas zanima: ";//napomena: ogranicite unos na samo validne vrijednosti
+	cin >> brPr;
+	brPr--;
+	cout << "Broj studenata koji su na odabranom predmetu dobili ocjenu 8 ili vise je: " << prebroji(matrica, brPr) << endl;
 
-    while (cout << "Izaberite studenta:\n", cin >> izbor, izbor < 1 || izbor > 5);
-    cout << "Prosjek odabranog studenta je: " << prosjek(matrica[izbor - 1]) << endl;
-
-    while (cout << "Izaberite predmet:\n", cin >> izbor, izbor < 1 || izbor > 4);
-    cout << "Broj studenata na odabranom predmetu sa ocjenom 8 ili vise je " << prebroji(matrica, izbor - 1) << endl;
-
-    system("pause>0");
-    return 0;
+	system("pause>0");
+	return 0;
 }
