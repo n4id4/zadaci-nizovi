@@ -1,42 +1,42 @@
 #include <iostream>
 using namespace std;
+const int vel = 8;
 
 int brojCifara(int broj)
 {
 	return log10(broj) + 1;
 }
 
-void Unos(int matrica[][8])
+void unos(int matrica[][vel])
 {
-	for (int i = 0; i < 8; i++)
+	for (int i = 0; i < vel; i++)
 	{
-		for (int j = 0; j < 8; j++)
+		for (int j = 0; j < vel; j++)
 		{
-			//crno polje
 			if ((i + j) % 2 == 0)
 			{
 				do
 				{
-					matrica[i][j] = rand() % 1000 + 1;
-				} while (matrica[i][j]%2!=0 && brojCifara(matrica[i][j])%2==0);
+					matrica[i][j]=rand()%10000+1;
+				} while (matrica[i][j]%2!=0 || brojCifara(matrica[i][j])%2==0);
 			}
 			else
 			{
 				do
 				{
-					matrica[i][j] = rand() % 1000 + 1;
-				} while (matrica[i][j] % 2 == 0 && brojCifara(matrica[i][j]) % 2 != 0);
+					matrica[i][j] = rand() % 10000 + 1;
+				} while (matrica[i][j] % 2 == 0 || brojCifara(matrica[i][j]) % 2 != 0);
 
 			}
 		}
 	}
 }
 
-void ispis(int matrica[][8])
+void ispis(int matrica[][vel])
 {
-	for (int i = 0; i < 8; i++)
+	for (int i = 0; i < vel; i++)
 	{
-		for (int j = 0; j < 8; j++)
+		for (int j = 0; j < vel; j++)
 		{
 			cout << matrica[i][j] << " ";
 		}
@@ -44,14 +44,14 @@ void ispis(int matrica[][8])
 	}
 }
 
-float prosjekIznadGlavne(int matrica[][8])
+float prosjekIznadGlavne(int matrica[][vel])
 {
 	int suma = 0, brojac = 0;
-	for (int i = 0; i < 8; i++)
+	for (int i = 0; i < vel; i++)
 	{
-		for (int j = 0; j < 8; j++)
+		for (int j = 0; j < vel; j++)
 		{
-			if (j > i && (i + j) % 2 != 0)
+			if ((i + j) % 2 != 0 && j>i)
 			{
 				suma += matrica[i][j];
 				brojac++;
@@ -61,14 +61,14 @@ float prosjekIznadGlavne(int matrica[][8])
 	return float(suma) / brojac;
 }
 
-float prosjekIspodSporedne(int matrica[][8])
+float prosjekIspodSporedne(int matrica[][vel])
 {
 	int suma = 0, brojac = 0;
-	for (int i = 0; i < 8; i++)
+	for (int i = 0; i < vel; i++)
 	{
-		for (int j = 0; j < 8; j++)
+		for (int j = 0; j < vel; j++)
 		{
-			if (i+j>=8 && (i + j) % 2 == 0)
+			if ((i + j) % 2 == 0 && (i+j)>=vel)
 			{
 				suma += matrica[i][j];
 				brojac++;
@@ -79,13 +79,15 @@ float prosjekIspodSporedne(int matrica[][8])
 }
 
 void main() {
-	int sahovskaTabla[8][8];
-	Unos(sahovskaTabla);
+	
+	int sahovskaTabla[vel][vel];
+	unos(sahovskaTabla);
 	ispis(sahovskaTabla);
-	cout << "Prosjek elemenat iznad glavne dijagonle je: " <<
+	cout << "Prosjek svih elemnata na bijelim poljima iznad glavne dijagonale je:" <<
 		prosjekIznadGlavne(sahovskaTabla) << endl;
-	cout << "Prosjek elemenat ispod sporedne dijagonle je: " <<
+	cout << "Prosjek svih elemnata na crnim poljima ispod sporedn dijagonale je:" <<
 		prosjekIspodSporedne(sahovskaTabla) << endl;
+
 	system("pause>0");
 }
 
